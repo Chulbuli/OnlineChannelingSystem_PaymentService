@@ -1,6 +1,9 @@
 <%@page import="model.Payment"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
+    
+      
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +22,7 @@
 			<div class="col-6">
 				<h1>Payment Details</h1>
 				<h4>Enter Payment Details</h4>
-				<form id="paymentForm" name="paymentForm">ff
+				<form id="paymentForm" name="paymentForm">
 					
 					Payment Amount: <input id="amount" name="Pay_amount" type="text"
 						class="form-control form-control-sm"> <br> 

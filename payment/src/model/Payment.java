@@ -26,7 +26,7 @@ public class Payment {
 
 	// Add Payment
 
-	public String AddPayment(String Pay_amount, Date Pay_date) {
+	public String AddPayment(String Pay_amount, String Pay_date) {
 		String output = "";
 
 		try {
@@ -41,27 +41,31 @@ public class Payment {
 			PreparedStatement preparedStmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 
 			preparedStmt.setDouble(1, Double.parseDouble(Pay_amount));
-			preparedStmt.setDate(2, Pay_date);
+			preparedStmt.setString(2, Pay_date);
 
 			preparedStmt.execute();
 			
-			int InsertedPayId = 0;
-			ResultSet rs = preparedStmt.getGeneratedKeys();
-			if(rs.next())
-				InsertedPayId = rs.getInt(1);
+			//int InsertedPayId = 0;
+			//ResultSet rs = preparedStmt.getGeneratedKeys();
+			//if(rs.next())
+				//InsertedPayId = rs.getInt(1);
 			
 			con.close();
+			
+			String newPayment = ViewAllPaymentDetails();
+			output = "{\"status\":\"success\", \"data\": \"" + newPayment + "\"}";
+			
+		} catch (Exception e)
+		{
+			 output = "{\"status\":\"error\", \"data\": \"Error while inserting the payment details.\"}";
+			 System.err.println(e.getMessage());
+			}
 
-			output = "Inserted successfully"+" Pament ID = "+InsertedPayId;
-		} catch (Exception e) {
-			output = "Error while inserting the payment details.";
-			System.err.println(e.getMessage());
-		}
 
 		return output;
 	}
 
-	// View Payment Details
+	// View All Payment Details
 
 	public String ViewAllPaymentDetails() {
 		String output = "";
@@ -74,7 +78,7 @@ public class Payment {
 			}
 
 			output = "<table border=\"1\"> <tr> "
-					+ "<th>Payment ID</th> <th>Payment Amount</th> <th>Payment Date </th> </tr>";
+					+ "<th><center> Payment ID </center></th> <th><center> Payment Amount </center></th> <th><center> Payment Date </center></th> <th><center>Update</center></th> <th><center>Remove</center></th></tr>";
 
 			String query = "select * from payment  WHERE Status = 'Done'";
 			Statement stmt = con.createStatement();
@@ -86,18 +90,15 @@ public class Payment {
 				String Pay_date = String.valueOf(rs.getDate("paymentDate"));
 
 				// add to HTML table
-				output += "<tr><td><input id=\"hidPaymentIDUpdate\" name=\"hidPaymentIDUpdate\"type=\"hidden\" value=\"" + Pay_Id + "\">"+ "</td>"; 
-				output += "<tr><td>" + Pay_Id + "</td>";
+				output += "<tr><td><input id='hidPaymentIDUpdate' name='hidPaymentIDUpdate type='hidden' value='"+ Pay_Id + "'>" + "</td>"; 
 				output += "<td>" + Pay_amount + "</td>";
 				output += "<td>" + Pay_date + "</td>";
 				
 				// buttons
-				 output += "<td><input name=\"btnUpdate\"type=\"button\"value=\"Update\" class=\"btn btn-secondary\"></td>"
-				 + "<td><form method=\"post\" action=\"items.jsp\">"
-				 + "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
-				 + "<input name=\"hidPaymentDelete\" type=\"hidden\" value=\"" + Pay_Id + "\">" + "</form></td></tr>"; 
-
-			}
+				output += "<td><input name='btnUpdate' type='button' value='Update'class='btnUpdate btn btn-secondary'></td>"
+				 + "<td><input name='btnRemove'type='button' value='Remove'class='btnRemove btn btn-danger'data-paymentid='"
+				 + Pay_Id + "'>" + "</td></tr>";
+				 }
 
 			// Complete the HTML table
 			output += " </table>";
@@ -111,6 +112,7 @@ public class Payment {
 	}
 
 	
+	// View ranged payment details
 	
 	public String ViewPaymentDetails(String fromdate, String todate) {
 		String output = "";
@@ -152,6 +154,7 @@ public class Payment {
 		return output;
 	}
 
+	// View total of payments
 	
 	public String GetTotalPayment(String fromdate, String todate) {
 		String output = "";
@@ -215,11 +218,14 @@ public class Payment {
 			preparedStmt.execute();
 			con.close();
 
-			output = "Updated successfully";
-		} catch (Exception e) {
-			output = "Error while updating the payment details.";
-			System.err.println(e.getMessage());
-		}
+			String newPayment = ViewAllPaymentDetails();
+			output = "{\"status\":\"success\", \"data\": \"" + newPayment + "\"}";
+			
+		} catch (Exception e)
+		{
+			 output = "{\"status\":\"error\", \"data\": \"Error while updatingting the payment details.\"}";
+			 System.err.println(e.getMessage());
+			}
 
 		return output;
 	}
@@ -248,11 +254,14 @@ public class Payment {
 			preparedStmt.execute();
 			con.close();
 
-			output = "Deleted successfully";
-		} catch (Exception e) {
-			output = "Error while deleting the payment details.";
-			System.err.println(e.getMessage());
-		}
+			String newPayment = ViewAllPaymentDetails();
+			output = "{\"status\":\"success\", \"data\": \"" + newPayment + "\"}";
+			
+		} catch (Exception e)
+		{
+			 output = "{\"status\":\"error\", \"data\": \"Error while deleting the payment details.\"}";
+			 System.err.println(e.getMessage());
+			}
 
 		return output;
 
