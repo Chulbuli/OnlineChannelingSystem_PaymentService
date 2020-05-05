@@ -19,7 +19,7 @@
 			<div class="col-6">
 				<h1>Payment Details</h1>
 				<h4>Enter Payment Details</h4>
-				<form id="paymentForm" name="paymentForm">
+				<form id="paymentForm" name="paymentForm">ff
 					
 					Payment Amount: <input id="amount" name="Pay_amount" type="text"
 						class="form-control form-control-sm"> <br> 
