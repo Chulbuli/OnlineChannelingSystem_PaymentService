@@ -63,6 +63,55 @@ public class Payment {
 
 	// View Payment Details
 
+	public String ViewAllPaymentDetails() {
+		String output = "";
+
+		try {
+			Connection con = connect();
+
+			if (con == null) {
+				return "Error while connecting to the database for reading.";
+			}
+
+			output = "<table border=\"1\"> <tr> "
+					+ "<th>Payment ID</th> <th>Payment Amount</th> <th>Payment Date </th> </tr>";
+
+			String query = "select * from payment  WHERE Status = 'Done'";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				String Pay_Id = Integer.toString(rs.getInt("paymentId"));
+				String Pay_amount = Double.toString(rs.getDouble("amount"));
+				String Pay_date = String.valueOf(rs.getDate("paymentDate"));
+
+				// add to HTML table
+				output += "<tr><td><input id=\"hidPaymentIDUpdate\" name=\"hidPaymentIDUpdate\"type=\"hidden\" value=\"" + Pay_Id + "\">"+ "</td>"; 
+				output += "<tr><td>" + Pay_Id + "</td>";
+				output += "<td>" + Pay_amount + "</td>";
+				output += "<td>" + Pay_date + "</td>";
+				
+				// buttons
+				 output += "<td><input name=\"btnUpdate\"type=\"button\"value=\"Update\" class=\"btn btn-secondary\"></td>"
+				 + "<td><form method=\"post\" action=\"items.jsp\">"
+				 + "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
+				 + "<input name=\"hidPaymentDelete\" type=\"hidden\" value=\"" + Pay_Id + "\">" + "</form></td></tr>"; 
+
+			}
+
+			// Complete the HTML table
+			output += " </table>";
+			con.close();
+		} catch (Exception e) {
+			output = "Error while reading the payment details.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
+
+	
+	
 	public String ViewPaymentDetails(String fromdate, String todate) {
 		String output = "";
 
