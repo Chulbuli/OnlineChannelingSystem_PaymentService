@@ -20,8 +20,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-6">
-				<h1>Payment Details</h1>
+				<h1><center> <b>Payment Details</b> </center></h1>
+				<hr>
+				<br>
 				<h4>Enter Payment Details</h4>
+				
 				<form id="paymentForm" name="paymentForm">
 					
 					Payment Amount: <input id="amount" name="Pay_amount" type="text"
