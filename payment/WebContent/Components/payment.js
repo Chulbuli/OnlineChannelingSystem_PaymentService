@@ -8,12 +8,13 @@ $(document).ready(function()
 		$("#alertError").hide(); 
 });
 
-// SAVE ============================================
+// SAVE ============================================tt
 //Request Algorithm 
 
 $(document).on("click", "#btnSave", function(event) {
 
 	// Clear alerts---------------------
+	
 	$("#alertSuccess").text("");
 	$("#alertSuccess").hide();
 	$("#alertError").text("");
