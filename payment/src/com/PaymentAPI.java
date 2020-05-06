@@ -41,7 +41,7 @@ public class PaymentAPI extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String output = pay.AddPayment(request.getParameter("amount"), request.getParameter("payment_Date"));
+		String output = pay.AddPayment(request.getParameter("Pay_amount"), request.getParameter("Pay_date"));
 
 		response.getWriter().write(output);
 
@@ -74,7 +74,7 @@ public class PaymentAPI extends HttpServlet {
 		Map paras = getParasMap(request);
 
 		String output = pay.UpdatePayment(paras.get("hidPaymentIDSave").toString(),
-				paras.get("amount").toString());
+				paras.get("Pay_amount").toString());
 
 		response.getWriter().write(output);
 

@@ -8,7 +8,7 @@ $(document).ready(function()
 		$("#alertError").hide(); 
 });
 
-// SAVE ============================================tt
+// SAVE ============================================
 //Request Algorithm 
 
 $(document).on("click", "#btnSave", function(event) {
@@ -95,22 +95,22 @@ function validatePaymentForm() {
 	var tmpAmount = $("#amount").val().trim();  
 	if (!$.isNumeric(tmpAmount))  
 	{   
-		return "Insert a numerical value for Payment Amount.";  } 
+		return "Insert a numerical value for Payment Amount.";  
 	}
 
 	// Payment Date
 	if ($("#date").val().trim() == "") {
 		return "Insert Payment Date";
-	
+	}
 	return true;
 }
 
 // UPDATE==========================================
 	$(document).on("click", ".btnUpdate", function(event)
 {
-	$("#hidPaymentIDSave").val($(this).closest("tr").find('#hidPaymentIDSave').val());
-	$("#amount").val($(this).closest("tr").find('td:eq(0)').text());
-	$("#date").val($(this).closest("tr").find('td:eq(1)').text());
+	$("#hidPaymentIDSave").val($(this).closest("tr").find('#hidPaymentIDUpdate').val());
+	$("#amount").val($(this).closest("tr").find('td:eq(1)').text());
+	$("#date").val($(this).closest("tr").find('td:eq(2)').text());
 				
 });
 	
@@ -142,7 +142,7 @@ function validatePaymentForm() {
 				$("#alertSuccess").text("Successfully deleted.");
 				$("#alertSuccess").show();
 				
-				$("#hidPaymentIDSave").html(resultSet.data);
+				$("#divPaymentGrid").html(resultSet.data);
 		} 
 		else if (resultSet.status.trim() == "error")
 		{

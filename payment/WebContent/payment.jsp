@@ -12,7 +12,7 @@
 <script src="Components/jquery-3.5.0.min.js"></script>
 <link href="Views/css/bootstrap.min.css" rel="stylesheet">
 <link href="Views/css/style.css" rel="stylesheet">
-<script src="Components/doctor.js"></script>
+<script src="Components/payment.js"></script>
 
 </head>
 <body>
@@ -27,7 +27,7 @@
 					Payment Amount: <input id="amount" name="Pay_amount" type="text"
 						class="form-control form-control-sm"> <br> 
 						
-					Payment Date:<input id="date" name="Pay_date" type="text"
+					Payment Date:<input id="date" name="Pay_date" type="date"
 						class="form-control form-control-sm"> <br>
 					  
 					<input id="btnSave" name="btnSave" type="button" value="Save" class="btn btn-primary"> 

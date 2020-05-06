@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import com.google.gson.JsonObject;
+
 public class Payment {
 
 	private Connection connect() {
@@ -53,11 +55,21 @@ public class Payment {
 			con.close();
 			
 			String newPayment = ViewAllPaymentDetails();
-			output = "{\"status\":\"success\", \"data\": \"" + newPayment + "\"}";
+			
+			
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("status", "success");
+			jsonObject.addProperty("data", newPayment);
+			output = jsonObject.toString();
 			
 		} catch (Exception e)
 		{
-			 output = "{\"status\":\"error\", \"data\": \"Error while inserting the payment details.\"}";
+			
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("status", "error");
+			jsonObject.addProperty("data", "Error while inserting the payment details.");
+			output = jsonObject.toString();
+			 
 			 System.err.println(e.getMessage());
 			}
 
@@ -90,7 +102,7 @@ public class Payment {
 				String Pay_date = String.valueOf(rs.getDate("paymentDate"));
 
 				// add to HTML table
-				output += "<tr><td><input id='hidPaymentIDUpdate' name='hidPaymentIDUpdate type='hidden' value='"+ Pay_Id + "'>" + "</td>"; 
+				output += "<tr><td><input id=\"hidPaymentIDUpdate\" value=\"" + Pay_Id + "\" name=\"hidPaymentIDUpdate\" type=\"hidden\"> "+ Pay_Id +" </td>";
 				output += "<td>" + Pay_amount + "</td>";
 				output += "<td>" + Pay_date + "</td>";
 				
@@ -113,7 +125,6 @@ public class Payment {
 		return output;
 	}
 
-	
 	// View ranged payment details
 	
 	public String ViewPaymentDetails(String fromdate, String todate) {
@@ -222,11 +233,17 @@ public class Payment {
 			con.close();
 
 			String newPayment = ViewAllPaymentDetails();
-			output = "{\"status\":\"success\", \"data\": \"" + newPayment + "\"}";
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("status", "success");
+			jsonObject.addProperty("data", newPayment);
+			output = jsonObject.toString();
 			
 		} catch (Exception e)
 		{
-			 output = "{\"status\":\"error\", \"data\": \"Error while updatingting the payment details.\"}";
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("status", "error");
+			jsonObject.addProperty("data", "Error while updating the payment details.");
+			output = jsonObject.toString();
 			 System.err.println(e.getMessage());
 			}
 
@@ -258,11 +275,17 @@ public class Payment {
 			con.close();
 
 			String newPayment = ViewAllPaymentDetails();
-			output = "{\"status\":\"success\", \"data\": \"" + newPayment + "\"}";
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("status", "success");
+			jsonObject.addProperty("data", newPayment);
+			output = jsonObject.toString();
 			
 		} catch (Exception e)
 		{
-			 output = "{\"status\":\"error\", \"data\": \"Error while deleting the payment details.\"}";
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("status", "error");
+			jsonObject.addProperty("data", "Error while deleting the payment details.");
+			output = jsonObject.toString();
 			 System.err.println(e.getMessage());
 			}
 
