@@ -20,7 +20,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-6">
-				<h1><center> <b>Payment Details</b> </center></h1>
+				<h1><center>  Payment Details  </center></h1>
 				<hr>
 				<br>
 				<h4>Enter Payment Details</h4>
