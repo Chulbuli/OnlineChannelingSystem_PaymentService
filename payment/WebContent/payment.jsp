@@ -37,9 +37,7 @@
 				</form>
 				
 				<div id="alertSuccess" class="alert alert-success"></div>
-				<%
-					out.print(session.getAttribute("statusMsg"));
-				%>
+				
 				<div id="alertError" class="alert alert-danger"></div>
 			<br>
 				<div id="divPaymentGrid">

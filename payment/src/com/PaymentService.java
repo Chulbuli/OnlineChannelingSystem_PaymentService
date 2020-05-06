@@ -25,6 +25,12 @@ import org.jsoup.nodes.Document;
 public class PaymentService {
 	Payment PaymentObj = new Payment();
 
+	@POST
+	@Path("/AllPaymentDetails")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String  ViewAllPaymentDetails() {
+		return PaymentObj.ViewAllPaymentDetails();
+	}
 
 	
 	@POST
@@ -45,7 +51,7 @@ public class PaymentService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String AddPayments(@FormParam("amount") String Pay_amount, @FormParam("paymentDate") Date Pay_date){
+	public String AddPayments(@FormParam("amount") String Pay_amount, @FormParam("paymentDate") String Pay_date){
 		String output = PaymentObj.AddPayment(Pay_amount, Pay_date);
 		return output;
 	}

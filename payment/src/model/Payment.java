@@ -38,7 +38,7 @@ public class Payment {
 
 			String query = " insert into payment (`amount`,`paymentDate`) values ( ?, ?)";
 
-			PreparedStatement preparedStmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			preparedStmt.setDouble(1, Double.parseDouble(Pay_amount));
 			preparedStmt.setString(2, Pay_date);
@@ -99,10 +99,12 @@ public class Payment {
 				 + "<td><input name='btnRemove'type='button' value='Remove'class='btnRemove btn btn-danger'data-paymentid='"
 				 + Pay_Id + "'>" + "</td></tr>";
 				 }
-
+				
+			con.close();
+			
 			// Complete the HTML table
 			output += " </table>";
-			con.close();
+			
 		} catch (Exception e) {
 			output = "Error while reading the payment details.";
 			System.err.println(e.getMessage());
@@ -194,6 +196,7 @@ public class Payment {
 
 		return output;
 	}
+	
 	// update payment
 
 	public String UpdatePayment(String Pay_Id, String Pay_amount) {
