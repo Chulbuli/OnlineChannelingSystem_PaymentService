@@ -9,6 +9,8 @@ $(document).ready(function()
 });
 
 // SAVE ============================================
+//Request Algorithm 
+
 $(document).on("click", "#btnSave", function(event) {
 
 	// Clear alerts---------------------
@@ -18,123 +20,118 @@ $(document).on("click", "#btnSave", function(event) {
 	$("#alertError").hide();
 
 	// Form validation-------------------
-	var status = validateDoctorForm();
-	if (status != true) {
+	var status = validatePaymentForm();
+	if (status != true) 
+	{
 		$("#alertError").text(status);
 		$("#alertError").show();
 		return;
 	}
+	
+	// If valid------------------------   
 
-	var type = ($("#hidDoctorIDSave").val() == "") ? "POST" : "PUT";
+	var type = ($("#hidPaymentIDSave").val() == "") ? "POST" : "PUT";
 
-	$.ajax({
-		url : "DoctorAPI",
+	$.ajax(
+	{
+		url : "PaymentAPI",
 		type : type,
-		data : $("#doctorFome").serialize(),
+		data : $("#paymentForm").serialize(),
 		dataType : "text",
-		complete : function(response, status) {
-			console.log(response)
-			onDoctorSaveComplete(response.responseText, status);
+		complete : function(response, status) 
+		{
+			onPaymentSaveComplete(response.responseText, status);
 		}
 	});
 });
 
-function onDoctorSaveComplete(response, status) {
-	if (status == "success") {
+//Response Algorithm
+
+function onPaymentSaveComplete(response, status) 
+{
+	if (status == "success") 
+	{
 		var resultSet = JSON.parse(response);
-		if (resultSet.status.trim() == "success") {
+		
+		if (resultSet.status.trim() == "success") 
+		{
 			$("#alertSuccess").text("Successfully saved.");
 			$("#alertSuccess").show();
-			$("#divDoctorGrid").html(resultSet.data);
-		} else if (resultSet.status.trim() == "error") {
+			
+			$("#divPaymentGrid").html(resultSet.data);
+			
+		} else if (resultSet.status.trim() == "error") 
+		{
 			$("#alertError").text(resultSet.data);
 			$("#alertError").show();
 		}
-	} else if (status == "error") {
+		
+	} else if (status == "error") 
+	{
 		$("#alertError").text("Error while saving.");
 		$("#alertError").show();
-	} else {
+	} else 
+	{
 		$("#alertError").text("Unknown error while saving..");
 		$("#alertError").show();
 	}
-	$("#hidDoctorIDSave").val("");
-	$("#D_Id")[0].reset();
+	
+	$("#hidPaymentIDSave").val("");
+	$("#paymentForm")[0].reset();
 }
 
 
 
 // CLIENT-MODEL================================================================
-function validateDoctorForm() {
-	// First name
-	if ($("#fName").val().trim() == "") {
-		return "Insert First Name";
+
+function validatePaymentForm() {
+	// Payment Amount
+	if ($("#amount").val().trim() == "") {
+		return "Insert Payment Amount";
+	}
+	
+	// is numerical value  
+	var tmpAmount = $("#amount").val().trim();  
+	if (!$.isNumeric(tmpAmount))  
+	{   
+		return "Insert a numerical value for Payment Amount.";  } 
 	}
 
-	// Last name
-	if ($("#lNmae").val().trim() == "") {
-		return "Insert Last Name.";
-	}
-	// Gender
-	if ($("#rdoGenderMale").val().trim() == "") {
-		return "Insert Gender.";
-	}
-	// Age
-	if ($("#age").val().trim() == "") {
-		return "Insert Age.";
-	}
-
-	// NIC
-	if ($("#docNIC").val().trim() == "") {
-		return "Insert NIC.";
-	}
-	// email
-	if ($("#docEmail").val().trim() == "") {
-		return "Insert Email.";
-	}
-	// Password
-	if ($("#passwod").val().trim() == "") {
-		return "Insert Password.";
-	}
-	// phone number
-	if ($("#phoneNumber").val().trim() == "") {
-		return "Insert Phone number.";
-	}
+	// Payment Date
+	if ($("#date").val().trim() == "") {
+		return "Insert Payment Date";
+	
 	return true;
 }
 
 // UPDATE==========================================
 	$(document).on("click", ".btnUpdate", function(event)
-			{
-				$("#hidDoctorIDSave").val($(this).closest("tr").find('#hidDoctorIDSave').val());
-				$("#fName").val($(this).closest("tr").find('td:eq(0)').text());
-				$("#lNmae").val($(this).closest("tr").find('td:eq(1)').text());
-				$("#rdoGenderMale").val($(this).closest("tr").find('td:eq(2)').text());
-				$("#age").val($(this).closest("tr").find('td:eq(3)').text());
-				$("#docNIC").val($(this).closest("tr").find('td:eq(4)').text());
-				$("#docEmail").val($(this).closest("tr").find('td:eq(5)').text());
-				$("#passwod").val($(this).closest("tr").find('td:eq(6)').text());
-				$("#phoneNumber").val($(this).closest("tr").find('td:eq(7)').text());
-			});
+{
+	$("#hidPaymentIDSave").val($(this).closest("tr").find('#hidPaymentIDSave').val());
+	$("#amount").val($(this).closest("tr").find('td:eq(0)').text());
+	$("#date").val($(this).closest("tr").find('td:eq(1)').text());
+				
+});
 	
-	//Remove
+//REMOVE===========================================
 	$(document).on("click", ".btnRemove", function(event)
 			{
 		
 		$.ajax({
-			url : "DoctorAPI",
-			type : type,
-			data : $("#doctorFome").serialize(),
+			url : "PaymentAPI",
+			type : "DELETE",
+			data : "Pay_Id=" + $(this).data("paymentid"),
 			dataType : "text",
-			complete : function(response, status) {
-				console.log(response)
-				onDoctorDeleteComplete(response.responseText, status);
-			}
+			 complete : function(response, status)
+			 {
+			 onPaymentDeleteComplete(response.responseText, status);
+			 } 
 		
 		});
 	});
 
 	
-		function onDoctorDeleteComplete(response, status)
+		function onPaymentDeleteComplete(response, status)
 		{
 			if (status == "success")
 		{
@@ -143,7 +140,8 @@ function validateDoctorForm() {
 		{
 				$("#alertSuccess").text("Successfully deleted.");
 				$("#alertSuccess").show();
-				$("#hidDoctorIDSave").html(resultSet.data);
+				
+				$("#hidPaymentIDSave").html(resultSet.data);
 		} 
 		else if (resultSet.status.trim() == "error")
 		{
@@ -158,7 +156,7 @@ function validateDoctorForm() {
 		} 
 		else
 		{
-			$("#alertError").text("Unknown error while deleting..");
+			$("#alertError").text("Unknown error while deleting.");
 			$("#alertError").show();
 		}
 }
